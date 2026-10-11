@@ -11,6 +11,7 @@ function QuoteForm() {
 
   const [errors, setErrors] = useState({})
   const [submitted, setSubmitted] = useState(false)
+  const [sending, setSending] = useState(false)
 
   function validate() {
     const newErrors = {}
@@ -29,14 +30,27 @@ function QuoteForm() {
   }
 
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
     const newErrors = validate()
     setErrors(newErrors)
+    if (Object.keys(newErrors).length > 0) return
 
-    if (Object.keys(newErrors).length === 0) {
-      setSubmitted(true)
-    }
+
+    setSending(true)
+    try {
+      const response = await fetch('/__forms.html', {
+        method: 'POST', 
+        headers: {'Content-type':'application/x-www-form-urlencoded' },
+         body: new URLSearchParams({ 'form-name': 'quote', ...formData }).toString(),
+      })
+      if (!response.ok) throw new Error ('Send failed')
+        setSubmitted(true)
+    } catch (err) {
+      setErrors({ send:'Senden fehlgeschlagen. Bitte rufen Sie uns an.' })
+   } finally {
+    setSending (false)
+    }   
   }
 
   function handleChange(e){
@@ -103,8 +117,10 @@ function QuoteForm() {
 
           <textarea name="message" rows={4} placeholder="Beschreiben Sie kurz Ihr Anliegen" value={formData.message} onChange={handleChange} className={`${inputStyle} border-slate-700 resize-none`} />
 
-          <button type="submit" className="font-bold py-4 bg-amber-400 hover:bg-amber-300 text-slate-950 rounded-lg transition">
-            Angebot anfordern →
+          
+            {errors.send && <p className="text-red-400 text-sm mt-1">{errors.send}</p>}
+          <button type="submit" disabled={sending} className="font-bold py-4 bg-amber-400 hover:bg-amber-300 text-slate-950 disabled:opacity-50 rounded-lg transition">
+            {sending ? 'Wird gesendet...' : 'Angebot anfordern →'}
           </button>
 
       </form>

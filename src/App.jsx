@@ -9,12 +9,14 @@ import Footer from './components/Footer'
 function App() {
   return (
     <div className="bg-slate-950 min-h-screen text-white">
-    <Hero />
+      <main>
+     <Hero />
     <TrustBar />
     <Services />
     <FAQ />
     <Karriere />
     <QuoteForm />
+     </main>
     <Footer />
     </div>
   )

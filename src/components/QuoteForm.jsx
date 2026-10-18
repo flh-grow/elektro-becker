@@ -101,7 +101,9 @@ function QuoteForm() {
 
 
         <div>
+  <label htmlFor="service" className="sr-only">Leistung</label>
   <select
+  id="service"
     name="service"
     value={formData.service}
     onChange={handleChange}

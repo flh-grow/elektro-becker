@@ -41,7 +41,7 @@ function Hero() {
           </a>
         </div>
 
-        <p className="text-slate-500 text-sm mt-6">✓ Antwort innerhalb von 24 Stunden · ✓ Unverbindlich</p>
+        <p className="text-slate-400 text-sm mt-6">✓ Antwort innerhalb von 24 Stunden · ✓ Unverbindlich</p>
         </div>
       </section> 
     )

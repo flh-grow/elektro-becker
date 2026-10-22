@@ -1,13 +1,13 @@
 import { useState } from "react"
 import { services } from '../data/services'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 function QuoteForm() {
   const [formData, setFormData] = useState({
-    name:'',
-    phone:'',
-    service:'',
-    message:'',
+    name: '',
+    phone: '',
+    service: '',
+    message: '',
   })
 
   const [errors, setErrors] = useState({})
@@ -18,16 +18,16 @@ function QuoteForm() {
     const newErrors = {}
 
     if (!formData.name.trim()) {
-      newErrors.name='Bitte geben Sie Ihren Namen ein.'
+      newErrors.name = 'Bitte geben Sie Ihren Namen ein.'
     }
     if (!/^[0-9+\s/-]{6,}$/.test(formData.phone)) {
-    newErrors.phone = 'Bitte geben Sie eine gültige Telefonnummer ein.'
-  }
-  if(!formData.service) {
-    newErrors.service = 'Bitte wählen Sie eine Leistung'
-  }
+      newErrors.phone = 'Bitte geben Sie eine gültige Telefonnummer ein.'
+    }
+    if (!formData.service) {
+      newErrors.service = 'Bitte wählen Sie eine Leistung'
+    }
 
-  return newErrors
+    return newErrors
   }
 
 
@@ -41,98 +41,103 @@ function QuoteForm() {
     setSending(true)
     try {
       const response = await fetch('/__forms.html', {
-        method: 'POST', 
-        headers: {'Content-type':'application/x-www-form-urlencoded' },
-         body: new URLSearchParams({ 'form-name': 'quote', ...formData }).toString(),
+        method: 'POST',
+        headers: { 'Content-type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({ 'form-name': 'quote', ...formData }).toString(),
       })
-      if (!response.ok) throw new Error ('Send failed')
-        setSubmitted(true)
+      if (!response.ok) throw new Error('Send failed')
+      setSubmitted(true)
     } catch (err) {
-      setErrors({ send:'Senden fehlgeschlagen. Bitte rufen Sie uns an.' })
-   } finally {
-    setSending (false)
-    }   
+      setErrors({ send: 'Senden fehlgeschlagen. Bitte rufen Sie uns an.' })
+    } finally {
+      setSending(false)
+    }
   }
 
-  function handleChange(e){
-    const {name, value}= e.target  
-    setFormData({...formData, [name]: value})
+  function handleChange(e) {
+    const { name, value } = e.target
+    setFormData({ ...formData, [name]: value })
     setErrors({ ...errors, [name]: '' })
   }
 
-  const inputStyle = 
-  'w-full bg-slate-900 border rounded-lg px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-amber-400 transition'
+  const inputStyle =
+    'w-full bg-slate-900 border rounded-lg px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-amber-400 transition'
 
-  return(
+  return (
     <section id="angebot" className="max-w-2xl mx-auto px-6 py-20">
       <p className="text-amber-400 text-sm font-semibold uppercase tracking-widest mb-3">Kontakt</p>
       <h2 className="text-3xl md:text-4xl font-bold mb-4">Kostenloses Angebot anfordern</h2>
       <p className="text-slate-400 mb-10">Wir melden uns innerhalb von 24 Stunden bei Ihnen.</p>
 
       {submitted ? (
-  <div className="border border-amber-400 rounded-xl p-8 text-center">
-    <p className="text-4xl mb-4">✅</p>
-    <h3 className="text-2xl font-bold mb-2">Vielen Dank, {formData.name}!</h3>
-    <p className="text-slate-400">Wir melden uns innerhalb von 24 Stunden bei Ihnen.</p>
-  </div>
-) : (
-  <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-        
-        <div>
-         <input name="name"
-         placeholder="Ihr Name *" 
-         value={formData.name}
-          onChange={handleChange} 
-          className={`${inputStyle} ${errors.name ? 'border-red-500' : 'border-slate-700'}`}
-          />{errors.name && <p className="text-red-400 text-sm mt-1">{errors.name}</p>}
+        <div className="border border-amber-400 rounded-xl p-8 text-center">
+          <p className="text-4xl mb-4">✅</p>
+          <h3 className="text-2xl font-bold mb-2">Vielen Dank, {formData.name}!</h3>
+          <p className="text-slate-400">Wir melden uns innerhalb von 24 Stunden bei Ihnen.</p>
+        </div>
+      ) : (
+        <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+
+          <div>
+            <input name="name"
+              placeholder="Ihr Name *"
+              value={formData.name}
+              onChange={handleChange}
+              className={`${inputStyle} ${errors.name ? 'border-red-500' : 'border-slate-700'}`}
+            />{errors.name && <p className="text-red-400 text-sm mt-1">{errors.name}</p>}
           </div>
 
 
 
           <div>
-          <input name="phone"
-          type="tel"
-         placeholder="Telefonnummer *" 
-         value={formData.phone} 
-         onChange={handleChange} 
-         className={`${inputStyle} ${errors.phone ? 'border-red-500' : 'border-slate-700'}`}/>
-         {errors.phone && <p className="text-red-400 text-sm mt-1">{errors.phone}</p>}
+            <input name="phone"
+              type="tel"
+              placeholder="Telefonnummer *"
+              value={formData.phone}
+              onChange={handleChange}
+              className={`${inputStyle} ${errors.phone ? 'border-red-500' : 'border-slate-700'}`} />
+            {errors.phone && <p className="text-red-400 text-sm mt-1">{errors.phone}</p>}
           </div>
 
 
 
-        <div>
-  <label htmlFor="service" className="sr-only">Leistung</label>
-  <select
-  id="service"
-    name="service"
-    value={formData.service}
-    onChange={handleChange}
-    className={`${inputStyle} ${errors.service ? 'border-red-500' : 'border-slate-700'}`}
-  >
-    <option value="">Welche Leistung? *</option>
-    {services.map((s) => (
-      <option key={s.title} value={s.title}>{s.title}</option>
-    ))}
-  </select>
-  {errors.service && <p className="text-red-400 text-sm mt-1">{errors.service}</p>}
-</div>
+          <div>
+            <label htmlFor="service" className="sr-only">Leistung</label>
+            <select
+              id="service"
+              name="service"
+              value={formData.service}
+              onChange={handleChange}
+              className={`${inputStyle} ${errors.service ? 'border-red-500' : 'border-slate-700'}`}
+            >
+              <option value="">Welche Leistung? *</option>
+              {services.map((s) => (
+                <option key={s.title} value={s.title}>{s.title}</option>
+              ))}
+            </select>
+            {errors.service && <p className="text-red-400 text-sm mt-1">{errors.service}</p>}
+          </div>
 
           <textarea name="message" rows={4} placeholder="Beschreiben Sie kurz Ihr Anliegen" value={formData.message} onChange={handleChange} className={`${inputStyle} border-slate-700 resize-none`} />
 
-          
-            {errors.send && <p className="text-red-400 text-sm mt-1">{errors.send}</p>}
+
+          {errors.send && <p className="text-red-400 text-sm mt-1">{errors.send}</p>}
           <button type="submit" disabled={sending} className="font-bold py-4 bg-amber-400 hover:bg-amber-300 text-slate-950 disabled:opacity-50 rounded-lg transition">
             {sending ? 'Wird gesendet...' : 'Angebot anfordern →'}
           </button>
 
-          <p className="text-sm text-slate-400">Mit dem Absenden stimmen Sie der Verarbeitung Ihrer Daten gemäß unserer{' '}
-          <Link to="/datenschutz" className="inline-block mb-6 text-amber-400 hover:text-amber-300 text-sm">Datenschutzerklärung</Link> zu.
+          <p className="text-sm text-slate-400">
+            Mit dem Absenden stimmen Sie der Verarbeitung Ihrer Daten gemäß unserer{' '}
+            <Link to="/datenschutz" className="text-amber-400 underline hover:text-amber-300">
+              Datenschutzerklärung
+            </Link>{' '}
+            zu.
           </p>
 
-      </form>
-)}
+        </form>
+      )}
     </section>
-  
-)}
+
+  )
+}
 export default QuoteForm

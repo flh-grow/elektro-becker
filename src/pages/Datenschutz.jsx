@@ -25,8 +25,8 @@ export default function Datenschutz() {
                     Kontaktformular
                 </h2>
                 <p className='text-slate-300'>
-                    Wenn Sie uns über das Kontaktformular eine Anfrage senden, werden Ihre Angaben (Name, Telefonnumm
-                </p>er, Leistung, Nachricht) zur Bearbeitung Ihrer Anfrage gespeichert. Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO.
+                    Wenn Sie uns über das Kontaktformular eine Anfrage senden, werden Ihre Angaben (Name, Telefonnummer, Leistung, Nachricht) zur Bearbeitung Ihrer Anfrage gespeichert. Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO.
+                </p>
             </section>
 
             <section className='mb-8'>

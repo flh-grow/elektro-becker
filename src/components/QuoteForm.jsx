@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { services } from '../data/services'
+import {Link} from 'react-router-dom'
 
 function QuoteForm() {
   const [formData, setFormData] = useState({
@@ -124,6 +125,10 @@ function QuoteForm() {
           <button type="submit" disabled={sending} className="font-bold py-4 bg-amber-400 hover:bg-amber-300 text-slate-950 disabled:opacity-50 rounded-lg transition">
             {sending ? 'Wird gesendet...' : 'Angebot anfordern →'}
           </button>
+
+          <p className="text-sm text-slate-400">Mit dem Absenden stimmen Sie der Verarbeitung Ihrer Daten gemäß unserer{' '}
+          <Link to="/datenschutz" className="inline-block mb-6 text-amber-400 hover:text-amber-300 text-sm">Datenschutzerklärung</Link> zu.
+          </p>
 
       </form>
 )}

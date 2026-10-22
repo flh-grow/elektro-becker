@@ -1,25 +1,20 @@
-import Hero from './components/Hero'
-import Services from './components/Services'
-import TrustBar from './components/TrustBar'
-import FAQ from './components/FAQ'
-import Karriere from './components/Karriere'
-import QuoteForm from './components/QuoteForm'
+import { Routes, Route } from 'react-router-dom'
+import Home from './pages/Home'
 import Footer from './components/Footer'
+import Impressum from "./pages/Impressum"
+import ScrollToTop from './components/ScrollToTop'
+import Datenschutz from './pages/Datenschutz'
 
-function App() {
+export default function App() {
   return (
     <div className="bg-slate-950 min-h-screen text-white">
-      <main>
-     <Hero />
-    <TrustBar />
-    <Services />
-    <FAQ />
-    <Karriere />
-    <QuoteForm />
-     </main>
-    <Footer />
+      <ScrollToTop />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/impressum" element={<Impressum />} />
+        <Route path="/datenschutz" element={<Datenschutz />} />
+      </Routes>
+      <Footer />
     </div>
   )
 }
-
-export default App

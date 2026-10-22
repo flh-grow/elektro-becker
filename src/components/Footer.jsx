@@ -1,4 +1,5 @@
 import { company } from '../data/company'
+import { Link } from 'react-router-dom'
 
 function Footer() {
   const titleStyle = 'text-amber-400 text-sm font-semibold uppercase tracking-widest mb-4'
@@ -20,7 +21,7 @@ function Footer() {
             <div className="flex flex-col gap-3 text-sm text-slate-400">
               <a href={`tel:${company.phoneLink}`} className="hover:text-amber-400 transition">📞 {company.phone}</a>
               <a href={`mailto:${company.email}`} className="hover:text-amber-400 transition">✉️ {company.email}</a>
-              <p>📍 {company.street},<br />{company.city}</p>
+              <p>📍 {company.street}<br />{company.city}</p>
             </div>
           </div>
 
@@ -37,8 +38,8 @@ function Footer() {
         <div className="flex flex-col sm:flex-row justify-between gap-4 border-t border-slate-800 mt-12 pt-8 text-sm text-slate-400">
           <p>© {new Date().getFullYear()} {company.name}</p>
           <div className="flex gap-6">
-            <a href="#" className="hover:text-white transition">Impressum</a>
-            <a href="#" className="hover:text-white transition">Datenschutz</a>
+            <Link to="/impressum" className="hover:text-white transition">Impressum</Link>
+            <Link to="/datenschutz" className="hover:text-white transition">Datenschutz</Link>
           </div>
         </div>
 
